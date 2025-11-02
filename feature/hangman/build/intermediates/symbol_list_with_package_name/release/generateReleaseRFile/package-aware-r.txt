@@ -1,0 +1,9 @@
+com.dicereligion.vagabond.feature.hangman
+array hangman_word_list
+drawable hangman_state_0
+drawable hangman_state_1
+drawable hangman_state_2
+drawable hangman_state_3
+drawable hangman_state_4
+drawable hangman_state_5
+drawable hangman_state_6

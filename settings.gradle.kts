@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Vagabond"
 include(":app")
+include(":feature:hangman")
+include(":core:designsystem")

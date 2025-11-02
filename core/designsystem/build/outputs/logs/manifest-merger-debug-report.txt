@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml:2:13-83
+INJECTED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml:2:13-83
+	package
+		INJECTED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml
+	xmlns:android
+		ADDED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml:2:23-81
+uses-sdk
+INJECTED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml reason: use-sdk injection requested
+INJECTED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml
+INJECTED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml
+	android:targetSdkVersion
+		INJECTED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml
+	android:minSdkVersion
+		INJECTED from /Users/anumey/Work/Android/Vagabond/core/designsystem/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5332259420213215145.xml
