@@ -18,8 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.dicereligion.vagabond.feature.hangman.domain.HangmanGameState
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.dicereligion.vagabond.core.designsystem.pixelBrute
 
 import androidx.compose.foundation.layout.Box
@@ -32,9 +34,14 @@ fun HangmanEndGameDialog(
 ) {
     if (!gameState.isGameOver) return
 
-    Dialog(onDismissRequest = { /* Prevent dismissing by clicking outside */ }) {
+    Dialog(
+        onDismissRequest = { /* Prevent dismissing by clicking outside */ },
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
         Box(
-            modifier = Modifier.fillMaxWidth(0.8f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp) // 30dp gap on left and right
         ) {
             Column(
                 modifier = Modifier
@@ -51,16 +58,18 @@ fun HangmanEndGameDialog(
                     text = if (gameState.isGameWon) "You Win!" else "You Lose!",
                     style = MaterialTheme.typography.headlineLarge,
                     color = if (gameState.isGameWon) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 10.dp) // Move down by 10dp
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
                     text = "The phrase was: ${gameState.secretWord}",
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 8.sp), // Reduce size by 50%
                     color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 10.dp) // Move down by 10dp
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
@@ -81,7 +90,7 @@ fun HangmanEndGameDialog(
                             ),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                     ) {
-                        Text("Play Again", style = MaterialTheme.typography.titleLarge, color = Color.White)
+                        Text("Again", style = MaterialTheme.typography.titleLarge, color = Color.White) // Changed to "Again"
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))

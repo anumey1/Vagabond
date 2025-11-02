@@ -111,12 +111,12 @@ fun HangmanGameScreen(navController: NavController) {
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(bottom = 4.dp)
+                        modifier = Modifier.padding(bottom = 25.dp) // Increased padding
                     )
                     Text(
                         text = "${gameState.guessesLeft}",
                         style = MaterialTheme.typography.headlineLarge, // Make the number larger
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.tertiary, // Changed to tertiary accent color
                         textAlign = TextAlign.Center
                     )
                 }
@@ -196,8 +196,8 @@ fun KeyboardButton(char: Char, gameState: HangmanGameState, onClick: (Char) -> U
     val isCorrect = gameState.secretWord.contains(char)
 
     val buttonColor = when {
-        isGuessed && isCorrect -> MaterialTheme.colorScheme.primary // Correct guess
-        isGuessed && !isCorrect -> MaterialTheme.colorScheme.error // Incorrect guess
+        isGuessed && isCorrect -> MaterialTheme.colorScheme.secondary // Correct guess
+        isGuessed && !isCorrect -> MaterialTheme.colorScheme.onTertiary // Incorrect guess
         else -> MaterialTheme.colorScheme.surfaceVariant // Not guessed yet
     }
 
