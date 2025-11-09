@@ -69,7 +69,9 @@ fun HangmanEndGameDialog(
                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 8.sp), // Reduce size by 50%
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 10.dp) // Move down by 10dp
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .padding(horizontal = 16.dp) // Add horizontal padding
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))

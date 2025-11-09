@@ -59,6 +59,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     // Core modules
+    implementation(project(":core:utils"))
     implementation(project(":core:designsystem"))
 
     // Testing

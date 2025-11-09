@@ -1,15 +1,14 @@
 package com.dicereligion.vagabond.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,14 +22,72 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.dicereligion.vagabond.core.designsystem.PixelFontFamily
 import com.dicereligion.vagabond.core.designsystem.VagabondTheme
 import com.dicereligion.vagabond.core.designsystem.pixelBrute
+
+private data class GameCardInfo(
+    val title: String,
+    val description: String,
+    val route: String?,
+    val enabled: Boolean
+)
+
+private val gameList = listOf(
+    GameCardInfo(
+        title = "Hangman",
+        description = "The old reliable game for travellers and the In General Bored.",
+        route = "hangman",
+        enabled = true
+    ),
+    GameCardInfo(
+        title = "Title in the Works",
+        description = "Don't worry, things are coming very soon here too.",
+        route = null,
+        enabled = false
+    ),
+    GameCardInfo(
+        title = "Title in the Works",
+        description = "Don't worry, things are coming very soon here too.",
+        route = null,
+        enabled = false
+    ),
+    GameCardInfo(
+        title = "Title in the Works",
+        description = "Don't worry, things are coming very soon here too.",
+        route = null,
+        enabled = false
+    ),
+    GameCardInfo(
+        title = "Title in the Works",
+        description = "Don't worry, things are coming very soon here too.",
+        route = null,
+        enabled = false
+    ),
+    GameCardInfo(
+        title = "Title in the Works",
+        description = "Don't worry, things are coming very soon here too.",
+        route = null,
+        enabled = false
+    ),
+    GameCardInfo(
+        title = "Title in the Works",
+        description = "Don't worry, things are coming very soon here too.",
+        route = null,
+        enabled = false
+    ),
+    GameCardInfo(
+        title = "Title in the Works",
+        description = "Don't worry, things are coming very soon here too.",
+        route = null,
+        enabled = false
+    )
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +97,7 @@ fun CollectionsScreen(navController: NavController) {
             TopAppBar(
                 title = { Text("Collections", style = MaterialTheme.typography.titleLarge) },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack("landing", inclusive = false) }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to Landing")
                     }
                 },
@@ -53,57 +110,56 @@ fun CollectionsScreen(navController: NavController) {
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 128.dp),
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(8) {
-                if (it == 0) { // First tile is Hangman
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(128.dp)
-                            .pixelBrute(
-                                shadowColor = MaterialTheme.colorScheme.onSurface,
-                                borderColor = MaterialTheme.colorScheme.surfaceVariant,
-                                onClick = { navController.navigate("hangman") }
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Hangman",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            textAlign = TextAlign.Center
-                        )
+            items(gameList) { game ->
+                GameCard(
+                    info = game,
+                    onClick = {
+                        if (game.enabled && game.route != null) {
+                            navController.navigate(game.route)
+                        }
                     }
-                } else { // Other tiles are Coming Soon placeholders
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(128.dp)
-                            .pixelBrute(
-                                shadowColor = MaterialTheme.colorScheme.onSurface,
-                                borderColor = MaterialTheme.colorScheme.surfaceVariant,
-                                onClick = null // Inert tile
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Coming Soon",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun GameCard(info: GameCardInfo, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth() // Card takes full width
+            .height(150.dp)
+            .pixelBrute(
+                shadowColor = MaterialTheme.colorScheme.onSurface,
+                borderColor = MaterialTheme.colorScheme.surfaceVariant,
+                onClick = if (info.enabled) onClick else null
+            )
+            .padding(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+    ) {
+        Text(
+            text = info.title,
+            style = MaterialTheme.typography.titleMedium,
+            fontFamily = PixelFontFamily, // Explicitly set font
+            textDecoration = TextDecoration.Underline,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = info.description,
+            style = MaterialTheme.typography.bodySmall,
+            fontFamily = PixelFontFamily, // Explicitly set font
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+        )
     }
 }
 

@@ -73,9 +73,17 @@ fun HangmanInputScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            if (phraseInput.length >= 120) {
+                Text(
+                    text = "Too many letters",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+            }
             OutlinedTextField(
                 value = phraseInput,
-                onValueChange = { phraseInput = it },
+                onValueChange = { if (it.length <= 120) phraseInput = it },
                 label = { Text("Word or Phrase") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
@@ -92,12 +100,12 @@ fun HangmanInputScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    if (phraseInput.isNotBlank()) {
+                    if (phraseInput.any { it.isLetterOrDigit() }) {
                         viewModel.startGame(phraseInput)
                         navController.navigate("hangman_game")
                     }
                 },
-                enabled = phraseInput.isNotBlank(),
+                enabled = phraseInput.any { it.isLetterOrDigit() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(64.dp)
@@ -105,7 +113,7 @@ fun HangmanInputScreen(navController: NavController) {
                         shadowColor = MaterialTheme.colorScheme.onSurface,
                         borderColor = MaterialTheme.colorScheme.surfaceVariant,
                         onClick = {
-                            if (phraseInput.isNotBlank()) {
+                            if (phraseInput.any { it.isLetterOrDigit() }) {
                                 viewModel.startGame(phraseInput)
                                 navController.navigate("hangman_game")
                             }

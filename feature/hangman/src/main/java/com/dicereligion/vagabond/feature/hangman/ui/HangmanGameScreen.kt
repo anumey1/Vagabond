@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -123,13 +124,21 @@ fun HangmanGameScreen(navController: NavController) {
             }
 
             // Word Display
-            Text(
-                text = gameState.maskedWord,
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onBackground,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(10.dp) // Add 10dp vertical spacing between lines
+            ) {
+                formatMaskedWordIntoLines(gameState.maskedWord).forEach { line ->
+                    Text(
+                        text = line,
+                        style = MaterialTheme.typography.headlineLarge.copy(fontSize = 16.sp),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
 
             // Custom Keyboard
             Column(
@@ -222,4 +231,45 @@ fun HangmanGameScreenPreview() {
     VagabondTheme {
         HangmanGameScreen(rememberNavController())
     }
+}
+
+private fun formatMaskedWordIntoLines(maskedWord: String, lineCharLimit: Int = 26): List<String> {
+    if (maskedWord.isBlank()) return emptyList()
+
+    val maskedWords = maskedWord.split(" / ")
+    val lines = mutableListOf<String>()
+    var currentLine = ""
+
+    maskedWords.forEach { word ->
+        // If a single word is longer than the limit, it gets its own line
+        if (word.length > lineCharLimit) {
+            // If there's a line being built, add it first
+            if (currentLine.isNotEmpty()) {
+                lines.add(currentLine)
+            }
+            // Add the long word as its own line
+            lines.add(word)
+            // Reset currentLine
+            currentLine = ""
+            return@forEach // Continue to next word
+        }
+
+        if (currentLine.isEmpty()) {
+            currentLine = word
+        } else {
+            val potentialLine = "$currentLine / $word"
+            if (potentialLine.length <= lineCharLimit) {
+                currentLine = potentialLine
+            } else {
+                lines.add(currentLine)
+                currentLine = word
+            }
+        }
+    }
+
+    if (currentLine.isNotEmpty()) {
+        lines.add(currentLine)
+    }
+
+    return lines
 }

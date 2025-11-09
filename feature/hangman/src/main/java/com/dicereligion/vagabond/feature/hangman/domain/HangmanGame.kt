@@ -1,7 +1,7 @@
 package com.dicereligion.vagabond.feature.hangman.domain
 
 import androidx.compose.runtime.Immutable
-import com.dicereligion.vagabond.feature.hangman.data.HangmanRepository
+import com.dicereligion.vagabond.feature.hangman.domain.ReturnMovieOrShow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,16 +34,14 @@ data class HangmanGameState(
 }
 
 @Singleton
-class HangmanGame @Inject constructor(
-    private val hangmanRepository: HangmanRepository
-) {
+class HangmanGame @Inject constructor() {
 
     fun newGame(secretWord: String? = null): HangmanGameState {
         val word = if (secretWord.isNullOrBlank()) {
             selectRandomWord()
         } else {
-            secretWord.uppercase()
-        }
+            secretWord
+        }.uppercase() // Ensure the word is always uppercase
         return HangmanGameState(secretWord = word)
     }
 
@@ -65,7 +63,7 @@ class HangmanGame @Inject constructor(
     }
 
     private fun selectRandomWord(): String {
-        return hangmanRepository.getWordList().random()
+        return ReturnMovieOrShow()
     }
 
     private fun updateGuessCountAndMessage(currentState: HangmanGameState, letter: Char):
