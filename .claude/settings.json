@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew *)",
+      "Bash(~/.claude/hooks/gradle-quiet.sh *)",
+      "Bash(adb devices *)",
+      "Bash(android docs *)",
+      "Bash(android info *)"
+    ],
+    "ask": [
+      "Bash(./gradlew *install*)",
+      "Bash(adb install *)",
+      "Bash(adb uninstall *)",
+      "Bash(adb shell *)",
+      "Bash(adb -s * install *)",
+      "Bash(adb -s * uninstall *)",
+      "Bash(adb -s * shell *)",
+      "Bash(android run *)",
+      "Bash(android install *)"
+    ]
+  }
+}
