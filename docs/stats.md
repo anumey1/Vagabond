@@ -5,12 +5,12 @@
 
 | | |
 |---|---|
-| **Updated** | 2026-11-09: stats.md created (MakeStats Create) |
+| **Updated** | 2026-11-09: owner answers to O-1 to O-4 (R-5, R-6; §0, §1, §2, §8, §10, §12, §13) |
 | **Verified** | 2026-11-09, full, against code, build, unit-test compile and lint (method: §13) |
 | **Identity** | `com.dicereligion.vagabond` (app id and namespace), version 4.1 (1) |
 | **Stack** | Kotlin 2.0.21, AGP 8.13.0, Gradle 8.13, Compose BOM 2024.09.00, Material3 1.2.1, Hilt 2.51.1 (kapt), DataStore 1.1.1; minSdk 30, target/compileSdk 36; Gradle runs on JetBrains Runtime 21 |
 | **Branch · verify** | `main` · `./gradlew testDebugUnitTest assembleDebug` |
-| **Live** | Not released: no store listing or signing setup in the repo [inferred]; owner to confirm (O-2) |
+| **Live** | Not released: not published anywhere (as of 2026-11-09) [owner] |
 | **Active plan** | None |
 | **Formats** | Preferences DataStore `settings`, key `app_theme` = an `AppTheme` name; no version number (§6) |
 | **Read first** | `AGENTS.md` (this project has no CLAUDE.md) |
@@ -20,11 +20,11 @@
 | Item | State |
 |---|---|
 | Build and tests | 2026-11-09 [build]: **verify fails**: `assembleDebug` passes, but no unit test compiles (L-6), so 0 tests run. `assembleRelease` fails in R8 (L-5). `lintDebug` fails with 5 errors in `feature:hangman` (L-3, L-7) |
-| Live | Not released [inferred] (O-2) |
+| Live | Not released (as of 2026-11-09) [owner] |
 | Pending release | None |
 | Bugs that matter now | Hangman Computer mode crashes on Android 11 to 14 (L-3); verify is red (L-6); no release build possible (L-5) |
-| Waiting on the owner | O-1 branch policy, O-2 live state, O-3 `@OptIn` uses, O-4 PRD rules still wanted, O-12 release-build fix; smaller: O-6, O-8 to O-11, O-13 (§2) |
-| Latest Changelog entry | 2026-11-09: stats.md created |
+| Waiting on the owner | Nothing now. Set aside for later (owner, 2026-11-09): O-3 remove `@OptIn`, O-6, O-8 to O-13 (§2) |
+| Latest Changelog entry | 2026-11-09: owner answers to O-1 to O-4 |
 
 ## 1. Rules and hazards
 
@@ -32,17 +32,18 @@
 
 | Rule | Reason |
 |---|---|
-| No experimental features: no preview, alpha, beta or canary libraries, no experimental compiler flags, no `@OptIn` / `@Experimental` APIs | PRD "CRITICAL POLICY": stable releases only, and a violation "must be rejected at review" [doc]. Six `@OptIn` uses exist (as of 2026-11-09; recount: §13) (O-3) |
+| No experimental features: no preview, alpha, beta or canary libraries, no experimental compiler flags, no `@OptIn` / `@Experimental` APIs | PRD "CRITICAL POLICY": stable releases only, and a violation "must be rejected at review" [doc]. Six `@OptIn` uses exist (as of 2026-11-09; recount: §13); the owner wants them removed, later (O-3). Add none |
+| Where the code and the PRD differ, keep the code; don't change code to match the PRD | Owner ruling R-6: what's newer is preferred |
 | Never change the app id `com.dicereligion.vagabond` | PRD §17 "do not change" [doc]; a new id is a different app to Android |
 | No `INTERNET` permission, no runtime permissions, no personal data stored | PRD §7.4 and §15: the app is offline-first by design [doc] |
 | Never invent a game rule; take it from the game's spec in `docs/Games/`, or ask | The specs are the source of truth for game behaviour (§12) |
 | `AGENTS.md` is the project instruction file; do not add a CLAUDE.md | Gemini and Antigravity read `AGENTS.md` too (`AGENTS.md` first lines) |
-| Work on `main` | Owner ruling R-1 (2026-11-08). PRD §9.1 still describes a `development` flow (O-1) |
+| Work on `main` | Owner ruling R-1 (2026-11-08); the `development` branch flow in PRD §9.1 is retired (R-5) |
 
 ### 1.2 Hazards
 
-- **Nothing is live** as far as the repo shows [inferred] (O-2). If the app is on a phone, §1.3's theme-name rule
-  protects it.
+- **Nothing is live:** the app is not published anywhere (as of 2026-11-09) [owner]. §1.3's theme-name rule still
+  protects any copy installed for testing.
 - **The verify command is red before any change** (L-6, as of 2026-11-09) [build]. A failing
   `testDebugUnitTest` is not proof that a change broke something; compare against the L-6 errors, and fix
   O-14 before relying on verify.
@@ -77,19 +78,16 @@ IDs are stable and never reused (`O-` open, `R-` ruling, `L-` limitation). Close
 
 | ID | Item | State | Who | Next step |
 |---|---|---|---|---|
-| O-1 | Branch policy: PRD §9.1 says `main` is protected and work goes through `development`; R-1 says work on `main` | Open | Owner | Say whether the PRD flow is retired or kept for later |
-| O-2 | Live state: is Vagabond on Play or on a phone, and which version? | Open | Owner | Confirm; then set the *Live* row with an as-of date |
-| O-3 | Six `@OptIn` uses (as of 2026-11-09) break §1.1: `ExperimentalMaterial3Api` in 4 screens (for `TopAppBar`), `ExperimentalCoroutinesApi` in 2 tests | Open | Owner, then agent | Decide: accepted exception (§10.3) or remove |
-| O-4 | PRD rules the code does not follow: strings in `strings.xml`, KDoc on every public symbol, Makefile targets, CI, an ADR folder | Open | Owner | Say which still hold (open items) and which are dropped (§10.2) |
-| O-5 | Fix the stale instrumented test assertions (L-2) | Open | Agent | After O-14 and O-4; needs a device to run, so the owner runs them |
-| O-6 | Untrack tracked `build/` output (same as Res `Docs/stats.md` O-6) | Open | Owner | `git ls-files -z '*/build/*' \| xargs -0 git rm --cached --quiet`, then commit |
+| O-3 | Six `@OptIn` uses (as of 2026-11-09) break §1.1: `ExperimentalMaterial3Api` in 4 screens (for `TopAppBar`), `ExperimentalCoroutinesApi` in 2 tests | Later: owner decided to remove them (2026-11-09) | Agent, when the owner picks it up | Find what each opt-in is needed for, then remove all six; verify and lint must stay as they were |
+| O-5 | Fix the stale instrumented test assertions (L-2) | Open | Agent | After O-14: change the assertions to match the screen, not the PRD (R-6); needs a device to run, so the owner runs them |
+| O-6 | Untrack tracked `build/` output (same as Res `Docs/stats.md` O-6) | Later | Owner | `git ls-files -z '*/build/*' \| xargs -0 git rm --cached --quiet`, then commit |
 | O-7 | No unit tests for Hangman rules (`HangmanGame`, `maskedWord`) or the word picker | Open | Agent | Add JVM tests in a new feature/hangman/src/test folder |
-| O-8 | `docs/Saves/savefile1.md`: keep as a document, or move into the Changelog's older history? | Open | Owner | Decide |
-| O-9 | Stray `core/common/utils/` (old copies of `Chaos.kt`, `RandomMech.kt`, in no module) | Open | Owner | Confirm it can be deleted |
-| O-10 | Next game: `docs/Games/MinesweeperPRD.md` is written; no module exists | Open | Owner | Confirm Minesweeper is next and when |
-| O-11 | PRD §20 open questions: final colour tokens with WCAG AA contrast; branded icon and splash; Settings control style | Open | Owner | Decide each [doc] |
-| O-12 | Make the release build work (L-5) | Open | Owner, then agent | Choose: turn off `isMinifyEnabled` in the two library modules (the docs' usual advice), or add keep rules for their public API |
-| O-13 | The theme setting has no bump rule; §6 describes current practice [inferred] | Open | Owner | Confirm the rule in §6 |
+| O-8 | `docs/Saves/savefile1.md`: keep as a document, or move into the Changelog's older history? | Later | Owner | Decide |
+| O-9 | Stray `core/common/utils/` (old copies of `Chaos.kt`, `RandomMech.kt`, in no module) | Later | Owner | Confirm it can be deleted |
+| O-10 | Next game: `docs/Games/MinesweeperPRD.md` is written; no module exists | Later | Owner | Confirm Minesweeper is next and when |
+| O-11 | PRD §20 open questions: final colour tokens with WCAG AA contrast; branded icon and splash; Settings control style | Later | Owner | Decide each [doc] |
+| O-12 | Make the release build work (L-5) | Later | Owner, then agent | Choose: turn off `isMinifyEnabled` in the two library modules (the docs' usual advice), or add keep rules for their public API |
+| O-13 | The theme setting has no bump rule; §6 describes current practice [inferred] | Later | Owner | Confirm the rule in §6 |
 | O-14 | Make the tests compile again: 5 test files import `com.dicereligion.vagabond.ui.theme`, which moved to `core.designsystem` (L-6) | Open | Agent | Fix the imports; run verify; first priority, as verify is red |
 | O-15 | Fix the Computer-mode crash on Android 11 to 14 (L-3) | Open | Agent | Replace the 3 `removeLast()` calls with `removeAt(lastIndex)`; `lintDebug` must pass |
 | O-16 | Two lint errors: `getBackStackEntry` called during composition without `remember` (L-7) | Open | Agent | Wrap the call in `remember(navController.currentBackStackEntry)`, per the lint message; rerun lint |
@@ -243,12 +241,12 @@ default before `valueOf` instead of letting it throw. Owner to confirm (O-13).
 - **Lint:** `./gradlew lintDebug` stops at the first failing module; `:app:lintDebug` alone passes with warnings
   only (2026-11-09) [build].
 - **Other commands:** `make build` = `./gradlew assembleDebug`; `make run` builds, installs and launches on a device
-  (owner only). The PRD's other Makefile targets (`test`, `lint`, `verify` …) do not exist (O-4).
+  (owner only). The PRD's other Makefile targets (`test`, `lint`, `verify` …) do not exist; dropped (§10.3).
 - **Release:** not set up. `isMinifyEnabled = true` in `app`, `core:designsystem` and `feature:hangman`; no
   `signingConfigs`; release keystore location: none (PRD §17 says it must stay out of the repo [doc]).
   `app/proguard-rules.pro` exists; the two library modules name proguard-rules.pro and consumer-rules.pro
   files that do not exist. `assembleRelease` fails (L-5) [build].
-- **CI:** none (no `.github/` folder); PRD §12 describes one [doc] (O-4).
+- **CI:** none (no `.github/` folder); PRD §12 describes one [doc], dropped (§10.3).
 
 ## 9. Testing
 
@@ -278,25 +276,37 @@ default before `valueOf` instead of letting it throw. Owner to confirm (O-13).
 | R-2 | 2026-11-08 | Docs stay in lowercase `docs/`, including `stats.md` and `Changelog.md` | Git already tracks `docs/` [owner] |
 | R-3 | PRD | No experimental features (§1.1) | Stable releases only (PRD, top) [doc] |
 | R-4 | PRD §17 | App id `com.dicereligion.vagabond` never changes | [doc] |
+| R-5 | 2026-11-09 | The `development` branch flow (PRD §9.1) is retired | Owner [owner] |
+| R-6 | 2026-11-09 | Where the code and the PRD differ, the code is preferred; the PRD rules the code never followed are dropped (§10.3) | "What's new is preferred" [owner]. The `@OptIn` rule (R-3) still holds |
 
 ### 10.2 Deviations from the spec
+
+Under R-6 the code is kept in every row except `@OptIn`, which is to be removed (O-3).
 
 | Spec says | Code does |
 |---|---|
 | PRD §1.3, §2.1: no playable games in v1; Collections shows exactly 8 "Coming Soon" tiles in a grid | Hangman is playable; a list of 1 game and 7 "Title in the Works" placeholders |
 | PRD §8.1: landing, collections and settings as feature modules | They live in `app` |
-| PRD §7.5, §16: all UI text in `strings.xml` | Nearly all text is in Kotlin (O-4) |
-| PRD §8.3: KDoc on every public symbol | Mostly missing (O-4) |
+| PRD §7.5, §16: all UI text in `strings.xml` | Nearly all text is in Kotlin (§10.3) |
+| PRD §8.3: KDoc on every public symbol | Mostly missing (§10.3) |
 | PRD top: no `@OptIn` | Six uses as of 2026-11-09 (O-3) |
 | PRD header: targetSdk 35 | 36 |
-| PRD §9.1: work on `development` via feature branches | Work on `main` (R-1, O-1) |
-| PRD: deviations recorded as ADRs in a docs/adrs folder | No ADR folder; this table instead (O-4) |
+| PRD §9.1: work on `development` via feature branches | Work on `main` (R-1, R-5) |
+| PRD: deviations recorded as ADRs in a docs/adrs folder | No ADR folder; this table instead (§10.3) |
 | HangmanPRD §6: about 100 titles in res/values/arrays.xml | 2,000 titles in `HangmanData.kt` (as of 2026-11-08, §6) |
 | HangmanPRD §7: 7 vector drawables for the gallows | Text drawing in `HangmanVisual`; the 7 drawables are unused (L-4) |
 
 ### 10.3 Accepted, don't chase
 
-None yet.
+PRD rules dropped by R-6 (2026-11-09). Reopen any of them only if the owner asks.
+
+| Dropped rule | Reopen when |
+|---|---|
+| All UI text in `strings.xml` (PRD §7.5, §16) | The app gets a second language |
+| KDoc on every public symbol (PRD §8.3) | The owner asks |
+| Makefile targets beyond `build` and `run` (PRD §9.2) | The owner asks |
+| CI (PRD §12) | The owner asks |
+| ADR folder for deviations (PRD) | The owner asks; §10 records decisions instead |
 
 ## 11. Limitations, traps and diagnoses
 
@@ -331,7 +341,7 @@ None yet.
 | Doc | Status | Read it before touching | Trust it for |
 |---|---|---|---|
 | `AGENTS.md` | Current | Anything | Verify command, hard rules |
-| `docs/PRD.md` | Partly stale (§10.2) | The shell, theming, privacy | Product intent, privacy rules, app id; not for game scope, Makefile or CI |
+| `docs/PRD.md` | Partly stale; the code wins where they differ (R-6, §10.2) | The shell, theming, privacy | Product intent, privacy rules, app id; not for game scope, Makefile or CI |
 | `docs/Theme.md` | Current | Colours, components | PixelBrute design rules and palettes |
 | `docs/Games/HangmanPRD.md` | Draft 2025-10-31, mostly built | Hangman | Game rules (§1.1: the source of truth); not for assets or word list |
 | `docs/Games/HangmanDrawing.md` | Current | `HangmanVisual` | How the text gallows must render |
@@ -377,8 +387,8 @@ git ls-files | grep '/build/' | grep -vc '^\.claude/'
 grep -c 'uses-permission' app/src/main/AndroidManifest.xml   # permissions: expect 0
 ```
 
-**Cannot be checked from a session:** what is installed on any phone or on Play (O-2); instrumented and UI tests
-(need a device); how the screens look.
+**Cannot be checked from a session:** whether the app is published or installed anywhere (owner's word: §0);
+instrumented and UI tests (need a device); how the screens look.
 
 Not repo paths: `~/.claude/hooks/gradle-quiet.sh` (quiet Gradle wrapper, §8); `~/Work/Res/Docs/stats.md` (O-6).
 
