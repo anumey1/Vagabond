@@ -5,7 +5,7 @@
 | C1 Gather facts | [x] | 2026-11-08 | Read only. Questions for the owner at the end |
 | C2 Draft | [x] | 2026-11-08 | 374 lines; owner questions became §2 O-1 to O-13. Preview check.sh: only FAIL is the missing Changelog (C4) |
 | C3 Verify | [x] | 2026-11-09 | Verify is red (tests don't compile); release and lint fail; 3 new limitations, 3 new open items |
-| C4 Changelog | [ ] | | |
+| C4 Changelog | [x] | 2026-11-09 | `docs/Changelog.md` created; entry lists every issue found (owner asked for a note of them) |
 | C5 Pointers | [ ] | | |
 | C6 Checks | [ ] | | |
 
