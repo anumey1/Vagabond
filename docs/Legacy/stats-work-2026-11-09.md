@@ -7,7 +7,7 @@
 | C3 Verify | [x] | 2026-11-09 | Verify is red (tests don't compile); release and lint fail; 3 new limitations, 3 new open items |
 | C4 Changelog | [x] | 2026-11-09 | `docs/Changelog.md` created; entry lists every issue found (owner asked for a note of them) |
 | C5 Pointers | [x] | 2026-11-09 | `AGENTS.md` block + branch `main`; Res WorkMap §3, §5; Res stats header, O-8, §7.6; Res Changelog entry. Verify command same in all three. Res check.sh PASS |
-| C6 Checks | [ ] | | |
+| C6 Checks | [x] | 2026-11-09 | check.sh PASS (5 PRD warnings); cold-start passed; F1 walked, 5 small fixes; Draft line gone; Res backup re-run |
 
 Kinds (B6): **Game whose rules come from a spec** (Hangman from `docs/Games/HangmanPRD.md`; Minesweeper spec
 written, not built). Not a published app and no store presence found in the repo (*Live* to confirm with the owner).
@@ -62,7 +62,7 @@ written, not built). Not a published app and no store presence found in the repo
     exhaustive; the toggle only cycles two values).
 - **Git branches policy in PRD §9.1:** `main` protected/release-ready, `development` integration branch, feature
   branches `feature/<area>-<short-desc>`. Conflicts with the owner's decision to work on `main`; see Q1.
-- **Tracked build output:** 856 files under module `build/` folders are tracked in git although `.gitignore` now
+- **Tracked build output:** 854 files (C1 said 856; see C6) under module `build/` folders are tracked in git although `.gitignore` now
   ignores `build/` (`git ls-files | grep /build/`). A build makes them show as changed. Owner action open in
   Res `Docs/stats.md` O-6 `[doc]`.
 
@@ -250,3 +250,47 @@ PixelBrute (design system / `pixelBrute` modifier), Cosmic Teal / Red Star (the 
 | check.sh | after edits | Only FAIL: Changelog missing (C4). Warnings kept: PRD §15, §16, §1.5, §2.1, §2.3 are PRD section numbers, each written "PRD §N" |
 
 Not run: `make run`, `connectedDebugAndroidTest` (device); nothing on a console.
+
+## C6 record (2026-11-09)
+
+**check.sh:** PASS, 0 failing checks, 5 warnings. Kept: each is a PRD section number (§15, §16, §1.5, §2.1,
+§2.3), written "PRD §N" in the doc, so the reader knows which doc it means (F1: IDs from other docs name the doc).
+Res check.sh: PASS, 0 warnings.
+
+**Correction:** C1 and C3 counted 856 tracked build files. 2 of those are skill docs under
+`.claude/skills/agp-9-upgrade/references/android/build/`, not build output; the §13 recount command (which skips
+`.claude/`) gives 854. Fixed in `stats.md` §1.2 and the Changelog entry.
+
+**Cold-start test (F3)**, from `show.sh` output plus at most one section each:
+
+| # | Answer | Source |
+|---|---|---|
+| 1 | An offline games app for 1–2 players with Hangman playable; nothing is known to be live (Not released, inferred, O-2) | Header (description, *Live*) |
+| 2 | `./gradlew testDebugUnitTest assembleDebug` on `main`; it is red before any change (L-6) | Header (*Branch · verify*); red state from §1.2 |
+| 3 | No experimental libraries or `@OptIn` (PRD policy); never change the app id; no permissions or network; never invent a game rule; never rename an `AppTheme` constant (crashes users who saved it); never stage tracked `build/` files | §1 |
+| 4 | O-14 (make tests compile) is first priority, then O-15 (Android 11 to 14 crash), O-16 (lint), O-12 (release build, owner chooses); owner questions O-1 to O-4 | §2 |
+| 5 | "Change a palette or add a theme": `Color.kt`, `Theme.kt`, `SettingsScreen.kt`; test `SettingsViewModelTest` (after O-14) | §5 |
+
+Passed. Fix made from it: §5's test column now says `SettingsViewModelTest` compiles only after O-14 (a session
+would otherwise run it and be surprised).
+
+**F1 walk.** Every item yes, except as noted:
+
+- Header: yes. *Read first* names `AGENTS.md`, as this project has no CLAUDE.md. *Branch · verify* matches
+  `AGENTS.md` and WorkMap §3 (checked again).
+- Structure: yes (check.sh); 396 lines, every section within budget.
+- Freshness: fixed. Three drifting counts had no "as of": 854 build files (§1.2), six `@OptIn` uses (§1.1, O-3,
+  §10.2), 2,000 titles (§7.3 now says "every title"; §10.2 points to §6's dated count). Recount commands are in §13.
+- Content: yes. §0 "Waiting on the owner" listed only O-1 to O-4; it now adds O-12 and the smaller owner items.
+  WorkMap §4 lists no Vagabond-only hazard; its device-command hazard is in §1.2. B6 "Game whose rules come from a
+  spec": §1.1 has "Never invent a rule", §12 names HangmanPRD as the source of truth.
+- §13 `Not repo paths:` said "none", but the doc names `~/.claude/hooks/gradle-quiet.sh` and Res `Docs/stats.md`;
+  both now listed.
+- Words and marks: yes (check.sh; no emoji, lines, paths, tags).
+- Around the doc: Changelog top entry is the one §0 names; `AGENTS.md` has the status-doc block; no old section
+  numbers to fix (new doc). Cold-start passed.
+- Not checkable here: whether every fact is right beyond C3's checks; device behaviour (L-3 crash not seen on a
+  device).
+
+**Res `ClaudeSetup/` backup:** re-run: 639 files, "Secret scan: clean."; Vagabond's mirrored `AGENTS.md` matches.
+It also mirrored changes other sessions made (DungeonSeeker, SunEater, Python projects, two memory folders).

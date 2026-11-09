@@ -1,7 +1,5 @@
 # Vagabond: status
 
-> **Draft (MakeStats Create, C2).** Not yet verified.
-
 > Offline "traveling games" app for 1–2 players: a shell (Landing, Collections, Settings) hosting mini-games, with
 > Hangman playable. Read §1 before changing anything. History: `docs/Changelog.md`.
 
@@ -25,7 +23,7 @@
 | Live | Not released [inferred] (O-2) |
 | Pending release | None |
 | Bugs that matter now | Hangman Computer mode crashes on Android 11 to 14 (L-3); verify is red (L-6); no release build possible (L-5) |
-| Waiting on the owner | O-1 branch policy, O-2 live state, O-3 `@OptIn` uses, O-4 PRD rules still wanted |
+| Waiting on the owner | O-1 branch policy, O-2 live state, O-3 `@OptIn` uses, O-4 PRD rules still wanted, O-12 release-build fix; smaller: O-6, O-8 to O-11, O-13 (§2) |
 | Latest Changelog entry | 2026-11-09: stats.md created |
 
 ## 1. Rules and hazards
@@ -34,7 +32,7 @@
 
 | Rule | Reason |
 |---|---|
-| No experimental features: no preview, alpha, beta or canary libraries, no experimental compiler flags, no `@OptIn` / `@Experimental` APIs | PRD "CRITICAL POLICY": stable releases only, and a violation "must be rejected at review" [doc]. Six `@OptIn` uses exist already (O-3) |
+| No experimental features: no preview, alpha, beta or canary libraries, no experimental compiler flags, no `@OptIn` / `@Experimental` APIs | PRD "CRITICAL POLICY": stable releases only, and a violation "must be rejected at review" [doc]. Six `@OptIn` uses exist (as of 2026-11-09; recount: §13) (O-3) |
 | Never change the app id `com.dicereligion.vagabond` | PRD §17 "do not change" [doc]; a new id is a different app to Android |
 | No `INTERNET` permission, no runtime permissions, no personal data stored | PRD §7.4 and §15: the app is offline-first by design [doc] |
 | Never invent a game rule; take it from the game's spec in `docs/Games/`, or ask | The specs are the source of truth for game behaviour (§12) |
@@ -50,8 +48,9 @@
   O-14 before relying on verify.
 - **Renaming or removing an `AppTheme` value crashes the app at start** for anyone who saved that theme:
   `SettingsRepository.appTheme` reads it with `AppTheme.valueOf`, which throws on an unknown name.
-- **Tracked build output:** 856 files under module `build/` folders are still tracked although `.gitignore` ignores
-  `build/`. After any build they show as changed. Never stage them; the owner untracks them (O-6).
+- **Tracked build output:** 854 files under module `build/` folders (as of 2026-11-09; recount: §13) are still
+  tracked although `.gitignore` ignores `build/`. After any build they show as changed. Never stage them; the
+  owner untracks them (O-6).
 - **`make run` installs and launches on a device** (`Makefile`). `.claude/settings.json` makes `adb install`,
   `adb shell`, `android run` / `install` and `./gradlew *install*` ask first.
 - **No release build can be made** (L-5) [build], and no signing config exists. Do not hand out a debug build as
@@ -80,7 +79,7 @@ IDs are stable and never reused (`O-` open, `R-` ruling, `L-` limitation). Close
 |---|---|---|---|---|
 | O-1 | Branch policy: PRD §9.1 says `main` is protected and work goes through `development`; R-1 says work on `main` | Open | Owner | Say whether the PRD flow is retired or kept for later |
 | O-2 | Live state: is Vagabond on Play or on a phone, and which version? | Open | Owner | Confirm; then set the *Live* row with an as-of date |
-| O-3 | Six `@OptIn` uses break §1.1: `ExperimentalMaterial3Api` in 4 screens (for `TopAppBar`), `ExperimentalCoroutinesApi` in 2 tests | Open | Owner, then agent | Decide: accepted exception (§10.3) or remove |
+| O-3 | Six `@OptIn` uses (as of 2026-11-09) break §1.1: `ExperimentalMaterial3Api` in 4 screens (for `TopAppBar`), `ExperimentalCoroutinesApi` in 2 tests | Open | Owner, then agent | Decide: accepted exception (§10.3) or remove |
 | O-4 | PRD rules the code does not follow: strings in `strings.xml`, KDoc on every public symbol, Makefile targets, CI, an ADR folder | Open | Owner | Say which still hold (open items) and which are dropped (§10.2) |
 | O-5 | Fix the stale instrumented test assertions (L-2) | Open | Agent | After O-14 and O-4; needs a device to run, so the owner runs them |
 | O-6 | Untrack tracked `build/` output (same as Res `Docs/stats.md` O-6) | Open | Owner | `git ls-files -z '*/build/*' \| xargs -0 git rm --cached --quiet`, then commit |
@@ -163,7 +162,7 @@ same pattern under their package (`.../core/designsystem/`, `.../core/utils/`, `
 | I want to… | Open | Test to run |
 |---|---|---|
 | Add a game to Collections | `CollectionsScreen.kt` (`gameList`), a nested graph in `MainActivity.kt`, a new `feature/` module in `settings.gradle.kts` | Verify command; `CollectionsScreenTest` on a device (owner) |
-| Change a palette or add a theme | `Color.kt`, then `Theme.kt` and the toggle in `SettingsScreen.kt` (§1.3: never rename a stored name) | `SettingsViewModelTest` |
+| Change a palette or add a theme | `Color.kt`, then `Theme.kt` and the toggle in `SettingsScreen.kt` (§1.3: never rename a stored name) | `SettingsViewModelTest` (compiles only after O-14) |
 | Change Hangman rules or masking | `HangmanGame.kt` | None yet (O-7) |
 | Add or remove Computer-mode titles | `HangmanData.kt` (`movie_list`, `tv_show_list`) | None yet (O-7) |
 | Change the gallows picture | `HangmanVisual.kt` (`hangmanStages`); `docs/Games/HangmanDrawing.md` | None |
@@ -223,7 +222,7 @@ default before `valueOf` instead of letting it throw. Owner to confirm (O-13).
   win when every letter and digit is guessed, lose at 7 wrong. The secret word is uppercased; the on-screen
   keyboard (digits and QWERTY) only sends uppercase.
 - **Computer mode:** `ReturnMovieOrShow()` fills a "shuffle bag" with both lists, shuffles it with
-  `Chaos.mech.shuffleList`, and takes one title at a time, so no title repeats until all 2,000 have been used.
+  `Chaos.mech.shuffleList`, and takes one title at a time, so no title repeats until every title has been used.
   The bag lasts only while the app process lives.
 - **Gallows:** text drawing, 7 stages (`HangmanVisual.hangmanStages`) in a 150 dp box (L-1).
 - Files: `feature/hangman/`.
@@ -288,11 +287,11 @@ default before `valueOf` instead of letting it throw. Owner to confirm (O-13).
 | PRD §8.1: landing, collections and settings as feature modules | They live in `app` |
 | PRD §7.5, §16: all UI text in `strings.xml` | Nearly all text is in Kotlin (O-4) |
 | PRD §8.3: KDoc on every public symbol | Mostly missing (O-4) |
-| PRD top: no `@OptIn` | Six uses (O-3) |
+| PRD top: no `@OptIn` | Six uses as of 2026-11-09 (O-3) |
 | PRD header: targetSdk 35 | 36 |
 | PRD §9.1: work on `development` via feature branches | Work on `main` (R-1, O-1) |
 | PRD: deviations recorded as ADRs in a docs/adrs folder | No ADR folder; this table instead (O-4) |
-| HangmanPRD §6: about 100 titles in res/values/arrays.xml | 2,000 titles in `HangmanData.kt` |
+| HangmanPRD §6: about 100 titles in res/values/arrays.xml | 2,000 titles in `HangmanData.kt` (as of 2026-11-08, §6) |
 | HangmanPRD §7: 7 vector drawables for the gallows | Text drawing in `HangmanVisual`; the 7 drawables are unused (L-4) |
 
 ### 10.3 Accepted, don't chase
@@ -381,7 +380,7 @@ grep -c 'uses-permission' app/src/main/AndroidManifest.xml   # permissions: expe
 **Cannot be checked from a session:** what is installed on any phone or on Play (O-2); instrumented and UI tests
 (need a device); how the screens look.
 
-Not repo paths: none.
+Not repo paths: `~/.claude/hooks/gradle-quiet.sh` (quiet Gradle wrapper, §8); `~/Work/Res/Docs/stats.md` (O-6).
 
 ## 14. Glossary
 
