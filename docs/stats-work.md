@@ -6,7 +6,7 @@
 | C2 Draft | [x] | 2026-11-08 | 374 lines; owner questions became §2 O-1 to O-13. Preview check.sh: only FAIL is the missing Changelog (C4) |
 | C3 Verify | [x] | 2026-11-09 | Verify is red (tests don't compile); release and lint fail; 3 new limitations, 3 new open items |
 | C4 Changelog | [x] | 2026-11-09 | `docs/Changelog.md` created; entry lists every issue found (owner asked for a note of them) |
-| C5 Pointers | [ ] | | |
+| C5 Pointers | [x] | 2026-11-09 | `AGENTS.md` block + branch `main`; Res WorkMap §3, §5; Res stats header, O-8, §7.6; Res Changelog entry. Verify command same in all three. Res check.sh PASS |
 | C6 Checks | [ ] | | |
 
 Kinds (B6): **Game whose rules come from a spec** (Hangman from `docs/Games/HangmanPRD.md`; Minesweeper spec

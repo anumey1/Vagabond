@@ -7,7 +7,8 @@ Newest first. One entry per change that touched the code or `stats.md`. The stat
 - **What:** Vagabond now has a status doc, `docs/stats.md`, in the standard 15-section form, and this changelog.
   A new session can find the rules, the open work and the known problems without reading the whole PRD.
 - **Why:** Owner request (`/makestats`, Create mode); Vagabond was the one Android project without a status doc.
-- **Files:** `docs/stats.md`, `docs/Changelog.md`, `docs/stats-work.md` (work file)
+- **Files:** `docs/stats.md`, `docs/Changelog.md`, `docs/stats-work.md` (work file), `AGENTS.md` (status-doc
+  block; branch now `main`)
 - **Verified:** `./gradlew testDebugUnitTest assembleDebug` → **fails** (tests do not compile; was already failing);
   `assembleDebug` → passes; `assembleRelease` → fails in R8; `lintDebug` → 5 errors in `feature:hangman`;
   `:app:compileDebugAndroidTestKotlin` → 20 errors. Not checked on a device.

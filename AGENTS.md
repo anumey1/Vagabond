@@ -5,7 +5,13 @@ Antigravity read it too).
 
 A lightweight offline "traveling games" container app for 1–2 players, built CLI-only. Package
 `com.dicereligion.vagabond`. Kotlin 2.0 + Jetpack Compose, Hilt (kapt), DataStore, AGP 8.13. minSdk 30,
-targetSdk/compileSdk 36. Work happens on the `development` branch.
+targetSdk/compileSdk 36. Work happens on `main` (owner ruling, `docs/stats.md` §10 R-1).
+
+## Status doc
+- `docs/stats.md` is the status doc. Load it with `/stats` (header + section index), then read only the
+  sections the task needs. Read `stats.md §1 Rules and hazards` before changing anything.
+- Every change updates the sections it touched and the *Updated* row, and adds an entry at the top of
+  `docs/Changelog.md`, in the same change.
 
 ## Where things are
 - `docs/PRD.md` — product + technical spec (read by section): §5 theming, §6 functional requirements, §8
