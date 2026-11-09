@@ -3,8 +3,8 @@
 | Step | Status | Date | Notes |
 |---|---|---|---|
 | C1 Gather facts | [x] | 2026-11-08 | Read only. Questions for the owner at the end |
-| C2 Draft | [ ] | | |
-| C3 Verify | [ ] | | |
+| C2 Draft | [x] | 2026-11-08 | 374 lines; owner questions became §2 O-1 to O-13. Preview check.sh: only FAIL is the missing Changelog (C4) |
+| C3 Verify | [x] | 2026-11-09 | Verify is red (tests don't compile); release and lint fail; 3 new limitations, 3 new open items |
 | C4 Changelog | [ ] | | |
 | C5 Pointers | [ ] | | |
 | C6 Checks | [ ] | | |
@@ -219,3 +219,34 @@ PixelBrute (design system / `pixelBrute` modifier), Cosmic Teal / Red Star (the 
    wanted (open items) or dropped (deviations accepted)?
 6. **`docs/Saves/savefile1.md`:** keep as a document, or treat as history for the Changelog's "Older history"?
 7. **Stray `core/common/utils/`:** known leftover? (Only recorded; no code change in this job.)
+
+## C2 notes
+
+- Owner said "go ahead" without answering the C1 questions, so each question is a §2 item (O-1 to O-4, O-8 to
+  O-10, O-13) and the matching facts are tagged `[inferred]`.
+- Facts still to confirm in C3: L-3 (`removeLast`), the `composeOptions` trap (§11.2), release build (L-5), local
+  JDK (§8), test count.
+- check.sh preview warnings, kept on purpose: paths that are named because they are missing (`CLAUDE.md`,
+  `docs/adrs/`, `feature/hangman/src/test/`, library ProGuard files); `§15`, `§16`, `§1.5`, `§2.1`, `§2.3` are PRD
+  section numbers, each written as "PRD §N".
+
+## C3 record (2026-11-09)
+
+| Check | How | Result |
+|---|---|---|
+| Verify | `gradle-quiet.sh ./gradlew testDebugUnitTest assembleDebug` | **FAIL**: `:app:compileDebugUnitTestKotlin`, `SettingsViewModelTest` imports `vagabond.ui.theme.AppTheme` (L-6, O-14) |
+| Debug build | `./gradlew assembleDebug` | PASS |
+| Release build | `./gradlew assembleRelease` | **FAIL**: R8 missing classes `AppTheme`, `ThemeKt`, `PixelBruteStyleKt` (L-5) |
+| Lint | `./gradlew lintDebug`; `:app:lintDebug` | **FAIL** in `feature:hangman`: 3 NewApi `removeLast`, 2 unremembered `getBackStackEntry`; `app` warnings only |
+| Instrumented compile | `./gradlew :app:compileDebugAndroidTestKotlin` | **FAIL**, 20 errors (same imports). Not run: needs a device |
+| JDK | `./gradlew --version` | JetBrains Runtime 21.0.10 from Android Studio; no JDK set |
+| L-3 cause | `android docs fetch kb://android/about/versions/15/behavior-changes-15` | Confirmed: compileSdk 35+ binds to `List.removeLast`, `NoSuchMethodError` on Android 14 and lower |
+| L-5 cause | `android docs fetch kb://android/topic/performance/app-optimization/library-optimization` | Library build keep rules "must keep the library's public API from being removed"; libs shrink with no rules |
+| composeOptions trap | Same Compose setup doc | Plugin confirmed for Kotlin 2.0+; "ignored" not stated anywhere: stays `[inferred]` |
+| Paths | `test -e` on every backticked path (globs for `.../`) | Fixed `_6.xml`; un-backticked names that are deliberately absent (CLAUDE.md, ADR folder, test folder, ProGuard files, arrays.xml) |
+| Counts | `grep -c '^    "'` HangmanData.kt = 2000; `@OptIn` = 6; tracked build files = 856 (excluding `.claude/`); `@Test` = 3 unit + 13 instrumented; files importing old package = 5 | Match the doc |
+| Tags and rules | Read through §1, §10, §11 | Each §1.1 rule has a reason; each §1.3 row names a guard or "Guard: none" |
+| Missing rules | §6 bump rule | Written as current practice `[inferred]`, O-13 for the owner |
+| check.sh | after edits | Only FAIL: Changelog missing (C4). Warnings kept: PRD §15, §16, §1.5, §2.1, §2.3 are PRD section numbers, each written "PRD §N" |
+
+Not run: `make run`, `connectedDebugAndroidTest` (device); nothing on a console.
