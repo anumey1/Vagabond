@@ -1,11 +1,11 @@
 # Vagabond: status
 
 > Offline "traveling games" app for 1–2 players: a shell (Landing, Collections, Settings) hosting mini-games, with
-> Hangman playable. Read §1 before changing anything. History: `docs/Changelog.md`.
+> Hangman playable. Read §1 before changing anything. History: `Docs/Changelog.md`.
 
 | | |
 |---|---|
-| **Updated** | 2026-11-09: owner answers to O-1 to O-4 (R-5, R-6; §0, §1, §2, §8, §10, §12, §13) |
+| **Updated** | 2026-11-24: docs folder renamed to `Docs/` (R-2; §0, §10) |
 | **Verified** | 2026-11-09, full, against code, build, unit-test compile and lint (method: §13) |
 | **Identity** | `com.dicereligion.vagabond` (app id and namespace), version 4.1 (1) |
 | **Stack** | Kotlin 2.0.21, AGP 8.13.0, Gradle 8.13, Compose BOM 2024.09.00, Material3 1.2.1, Hilt 2.51.1 (kapt), DataStore 1.1.1; minSdk 30, target/compileSdk 36; Gradle runs on JetBrains Runtime 21 |
@@ -24,7 +24,7 @@
 | Pending release | None |
 | Bugs that matter now | Hangman Computer mode crashes on Android 11 to 14 (L-3); verify is red (L-6); no release build possible (L-5) |
 | Waiting on the owner | Nothing now. Set aside for later (owner, 2026-11-09): O-3 remove `@OptIn`, O-6, O-8 to O-13 (§2) |
-| Latest Changelog entry | 2026-11-09: owner answers to O-1 to O-4 |
+| Latest Changelog entry | 2026-11-24: docs folder renamed to `Docs/` |
 
 ## 1. Rules and hazards
 
@@ -36,7 +36,7 @@
 | Where the code and the PRD differ, keep the code; don't change code to match the PRD | Owner ruling R-6: what's newer is preferred |
 | Never change the app id `com.dicereligion.vagabond` | PRD §17 "do not change" [doc]; a new id is a different app to Android |
 | No `INTERNET` permission, no runtime permissions, no personal data stored | PRD §7.4 and §15: the app is offline-first by design [doc] |
-| Never invent a game rule; take it from the game's spec in `docs/Games/`, or ask | The specs are the source of truth for game behaviour (§12) |
+| Never invent a game rule; take it from the game's spec in `Docs/Games/`, or ask | The specs are the source of truth for game behaviour (§12) |
 | `AGENTS.md` is the project instruction file; do not add a CLAUDE.md | Gemini and Antigravity read `AGENTS.md` too (`AGENTS.md` first lines) |
 | Work on `main` | Owner ruling R-1 (2026-11-08); the `development` branch flow in PRD §9.1 is retired (R-5) |
 
@@ -82,9 +82,9 @@ IDs are stable and never reused (`O-` open, `R-` ruling, `L-` limitation). Close
 | O-5 | Fix the stale instrumented test assertions (L-2) | Open | Agent | After O-14: change the assertions to match the screen, not the PRD (R-6); needs a device to run, so the owner runs them |
 | O-6 | Untrack tracked `build/` output (same as Res `Docs/stats.md` O-6) | Later | Owner | `git ls-files -z '*/build/*' \| xargs -0 git rm --cached --quiet`, then commit |
 | O-7 | No unit tests for Hangman rules (`HangmanGame`, `maskedWord`) or the word picker | Open | Agent | Add JVM tests in a new feature/hangman/src/test folder |
-| O-8 | `docs/Saves/savefile1.md`: keep as a document, or move into the Changelog's older history? | Later | Owner | Decide |
+| O-8 | `Docs/Saves/savefile1.md`: keep as a document, or move into the Changelog's older history? | Later | Owner | Decide |
 | O-9 | Stray `core/common/utils/` (old copies of `Chaos.kt`, `RandomMech.kt`, in no module) | Later | Owner | Confirm it can be deleted |
-| O-10 | Next game: `docs/Games/MinesweeperPRD.md` is written; no module exists | Later | Owner | Confirm Minesweeper is next and when |
+| O-10 | Next game: `Docs/Games/MinesweeperPRD.md` is written; no module exists | Later | Owner | Confirm Minesweeper is next and when |
 | O-11 | PRD §20 open questions: final colour tokens with WCAG AA contrast; branded icon and splash; Settings control style | Later | Owner | Decide each [doc] |
 | O-12 | Make the release build work (L-5) | Later | Owner, then agent | Choose: turn off `isMinifyEnabled` in the two library modules (the docs' usual advice), or add keep rules for their public API |
 | O-13 | The theme setting has no bump rule; §6 describes current practice [inferred] | Later | Owner | Confirm the rule in §6 |
@@ -163,7 +163,7 @@ same pattern under their package (`.../core/designsystem/`, `.../core/utils/`, `
 | Change a palette or add a theme | `Color.kt`, then `Theme.kt` and the toggle in `SettingsScreen.kt` (§1.3: never rename a stored name) | `SettingsViewModelTest` (compiles only after O-14) |
 | Change Hangman rules or masking | `HangmanGame.kt` | None yet (O-7) |
 | Add or remove Computer-mode titles | `HangmanData.kt` (`movie_list`, `tv_show_list`) | None yet (O-7) |
-| Change the gallows picture | `HangmanVisual.kt` (`hangmanStages`); `docs/Games/HangmanDrawing.md` | None |
+| Change the gallows picture | `HangmanVisual.kt` (`hangmanStages`); `Docs/Games/HangmanDrawing.md` | None |
 | Change the button and card look | `PixelBruteStyle.kt` (`pixelBrute`) | Verify command |
 
 ## 6. Data, formats and limits
@@ -208,12 +208,12 @@ default before `valueOf` instead of letting it throw. Owner to confirm (O-13).
 - `VagabondTheme` also sets the status bar colour to the scheme's primary colour.
 - `Modifier.pixelBrute` gives the hard offset shadow and thick border; when pressed, the shadow collapses and the
   content shifts into its place. It handles its own click, so screens pass `onClick` to it as well as to `Button`.
-- All text uses Press Start 2P (`PixelFontFamily` in `Type.kt`). Design rules: `docs/Theme.md`.
+- All text uses Press Start 2P (`PixelFontFamily` in `Type.kt`). Design rules: `Docs/Theme.md`.
 
 ### 7.3 Hangman
 
 - **Flow:** Start → Input (type a phrase and Play, or Computer) → Game → end dialog (Play Again returns to Input,
-  Back to Menu returns to Start). Spec: `docs/Games/HangmanPRD.md` [doc].
+  Back to Menu returns to Start). Spec: `Docs/Games/HangmanPRD.md` [doc].
 - **Masking** (`HangmanGameState.maskedWord`): letters and digits are hidden until guessed, a space shows as `/`,
   every other character is shown from the start.
 - **Rules** (`HangmanGame`): a repeated or post-game guess changes nothing; a wrong guess adds one to the count;
@@ -229,7 +229,7 @@ default before `valueOf` instead of letting it throw. Owner to confirm (O-13).
 
 - `RandomMech` is a seeded 32-bit generator with range, percentage, dice and shuffle helpers; `Chaos.mech` is the
   one app-wide instance, seeded from the clock and `kotlin.random.Random` on first use. Games use it instead of
-  `kotlin.random` directly. `docs/Saves/savefile1.md` names the algorithm Xoshiro128++ [doc].
+  `kotlin.random` directly. `Docs/Saves/savefile1.md` names the algorithm Xoshiro128++ [doc].
 
 ## 8. Build, release and deploy
 
@@ -273,7 +273,7 @@ default before `valueOf` instead of letting it throw. Owner to confirm (O-13).
 | ID | Date | Ruling | Reason |
 |---|---|---|---|
 | R-1 | 2026-11-08 | Work happens on `main` | Owner's choice when creating this doc; `main` was checked out and ahead of `development` [owner] |
-| R-2 | 2026-11-08 | Docs stay in lowercase `docs/`, including `stats.md` and `Changelog.md` | Git already tracks `docs/` [owner] |
+| R-2 | 2026-11-24 | The docs folder is `Docs/` (capital D), like every other project; renamed from `docs/` (replaces the 2026-11-08 ruling to keep lowercase) | Owner: one folder name across all projects [owner] |
 | R-3 | PRD | No experimental features (§1.1) | Stable releases only (PRD, top) [doc] |
 | R-4 | PRD §17 | App id `com.dicereligion.vagabond` never changes | [doc] |
 | R-5 | 2026-11-09 | The `development` branch flow (PRD §9.1) is retired | Owner [owner] |
@@ -292,7 +292,7 @@ Under R-6 the code is kept in every row except `@OptIn`, which is to be removed 
 | PRD top: no `@OptIn` | Six uses as of 2026-11-09 (O-3) |
 | PRD header: targetSdk 35 | 36 |
 | PRD §9.1: work on `development` via feature branches | Work on `main` (R-1, R-5) |
-| PRD: deviations recorded as ADRs in a docs/adrs folder | No ADR folder; this table instead (§10.3) |
+| PRD: deviations recorded as ADRs in a Docs/adrs folder | No ADR folder; this table instead (§10.3) |
 | HangmanPRD §6: about 100 titles in res/values/arrays.xml | 2,000 titles in `HangmanData.kt` (as of 2026-11-08, §6) |
 | HangmanPRD §7: 7 vector drawables for the gallows | Text drawing in `HangmanVisual`; the 7 drawables are unused (L-4) |
 
@@ -341,13 +341,13 @@ None yet.
 | Doc | Status | Read it before touching | Trust it for |
 |---|---|---|---|
 | `AGENTS.md` | Current | Anything | Verify command, hard rules |
-| `docs/PRD.md` | Partly stale; the code wins where they differ (R-6, §10.2) | The shell, theming, privacy | Product intent, privacy rules, app id; not for game scope, Makefile or CI |
-| `docs/Theme.md` | Current | Colours, components | PixelBrute design rules and palettes |
-| `docs/Games/HangmanPRD.md` | Draft 2025-10-31, mostly built | Hangman | Game rules (§1.1: the source of truth); not for assets or word list |
-| `docs/Games/HangmanDrawing.md` | Current | `HangmanVisual` | How the text gallows must render |
-| `docs/Games/MinesweeperPRD.md` | Spec, not built | A Minesweeper module | Its rules and layout (O-10) |
-| `docs/Saves/savefile1.md` | Historical snapshot at 4.1 | — | Background on the random generator and word wrap (O-8) |
-| `docs/AndroidCLI.md` | Stale | — | Little; the `android-cli` skill is current |
+| `Docs/PRD.md` | Partly stale; the code wins where they differ (R-6, §10.2) | The shell, theming, privacy | Product intent, privacy rules, app id; not for game scope, Makefile or CI |
+| `Docs/Theme.md` | Current | Colours, components | PixelBrute design rules and palettes |
+| `Docs/Games/HangmanPRD.md` | Draft 2025-10-31, mostly built | Hangman | Game rules (§1.1: the source of truth); not for assets or word list |
+| `Docs/Games/HangmanDrawing.md` | Current | `HangmanVisual` | How the text gallows must render |
+| `Docs/Games/MinesweeperPRD.md` | Spec, not built | A Minesweeper module | Its rules and layout (O-10) |
+| `Docs/Saves/savefile1.md` | Historical snapshot at 4.1 | — | Background on the random generator and word wrap (O-8) |
+| `Docs/AndroidCLI.md` | Stale | — | Little; the `android-cli` skill is current |
 | `GeminiPlan.md` | Historical | — | How the shell was first planned |
 | `README.md` | Title only | — | — |
 | `.claude/skills/` | Current | Gradle or CLI work | Project skills: `agp-9-upgrade`, `android-cli`, `testing-setup` |
@@ -397,10 +397,10 @@ Not repo paths: `~/.claude/hooks/gradle-quiet.sh` (quiet Gradle wrapper, §8); `
 | Term | Meaning |
 |---|---|
 | Collections | The game-list screen (route `collections`) |
-| PixelBrute | The retro design system: pixel font, thick borders, hard offset shadows (`docs/Theme.md`, `pixelBrute`) |
+| PixelBrute | The retro design system: pixel font, thick borders, hard offset shadows (`Docs/Theme.md`, `pixelBrute`) |
 | Cosmic Teal, Red Star | The two app themes (`AppTheme.COSMIC_TEAL`, `RED_STAR`) |
 | Chaos, RandomMech | The app's random generator: `Chaos.mech` is the shared `RandomMech` instance |
 | Shuffle bag | The no-repeat picker for Computer-mode titles in `HangmanData.kt` |
 | Computer mode | One-player Hangman with a random movie or TV title |
 | Masked word | The secret phrase as shown: `_` for unguessed letters and digits, `/` for spaces |
-| Save file | `docs/Saves/savefile1.md`, a snapshot of the project, not app save data |
+| Save file | `Docs/Saves/savefile1.md`, a snapshot of the project, not app save data |

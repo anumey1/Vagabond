@@ -1,6 +1,17 @@
 # Vagabond: changelog
 
-Newest first. One entry per change that touched the code or `stats.md`. The status doc is `docs/stats.md`.
+Newest first. One entry per change that touched the code or `stats.md`. The status doc is `Docs/stats.md`.
+
+## 2026-11-24: docs folder renamed to `Docs/`
+
+- **What:** The docs folder is now `Docs/` (was `docs/`), the same name every other project uses. Every reference
+  to it in this repo now says `Docs/`. Ruling R-2 (keep lowercase, 2026-11-08) is replaced by the new ruling.
+- **Why:** Owner request, 2026-11-24: one folder name across all projects.
+- **Files:** `docs/` renamed to `Docs/` (staged with `git mv`; the disk ignores case); references in `AGENTS.md`,
+  `GeminiPlan.md`, `.claude/skills/testing-setup/SKILL.md`, `Docs/stats.md`, `Docs/Changelog.md`, `Docs/PRD.md`,
+  `Docs/Legacy/stats-work-2026-11-09.md`
+- **Verified:** each edited file differs from before only by `docs` becoming `Docs`; `check.sh` (below). No code changed.
+- **stats.md:** header, §0, §10.1 R-2
 
 ## 2026-11-09: owner answers to O-1 to O-4
 
@@ -9,7 +20,7 @@ Newest first. One entry per change that touched the code or `stats.md`. The stat
   differ, the code is preferred, and the PRD rules the code never followed are dropped (R-6, §10.3). The rest of
   the owner items (O-6, O-8 to O-13) are set aside for later.
 - **Why:** Owner answers, 2026-11-09.
-- **Files:** `docs/stats.md`, `docs/Changelog.md`
+- **Files:** `Docs/stats.md`, `Docs/Changelog.md`
 - **Verified:** `~/.claude/skills/makestats/check.sh` → PASS. No code changed.
 - **Closed:**
   - O-1 (branch policy): the PRD's `development` flow is retired; work on `main` (R-1, R-5).
@@ -20,10 +31,10 @@ Newest first. One entry per change that touched the code or `stats.md`. The stat
 
 ## 2026-11-09: stats.md created
 
-- **What:** Vagabond now has a status doc, `docs/stats.md`, in the standard 15-section form, and this changelog.
+- **What:** Vagabond now has a status doc, `Docs/stats.md`, in the standard 15-section form, and this changelog.
   A new session can find the rules, the open work and the known problems without reading the whole PRD.
 - **Why:** Owner request (`/makestats`, Create mode); Vagabond was the one Android project without a status doc.
-- **Files:** `docs/stats.md`, `docs/Changelog.md`, `docs/Legacy/stats-work-2026-11-09.md` (work file),
+- **Files:** `Docs/stats.md`, `Docs/Changelog.md`, `Docs/Legacy/stats-work-2026-11-09.md` (work file),
   `AGENTS.md` (status-doc block; branch now `main`)
 - **Verified:** `./gradlew testDebugUnitTest assembleDebug` → **fails** (tests do not compile; was already failing);
   `assembleDebug` → passes; `assembleRelease` → fails in R8; `lintDebug` → 5 errors in `feature:hangman`;
@@ -43,5 +54,5 @@ Newest first. One entry per change that touched the code or `stats.md`. The stat
 
 ## Older history
 
-None moved. Earlier work is in git history (from 2025-10-29) and in `docs/Saves/savefile1.md`, a project snapshot
+None moved. Earlier work is in git history (from 2025-10-29) and in `Docs/Saves/savefile1.md`, a project snapshot
 at version 4.1 (whether it moves here is O-8).

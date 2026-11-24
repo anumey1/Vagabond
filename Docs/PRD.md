@@ -205,7 +205,7 @@ For clarity, PRDv3 previously expressed routes as `/`, `/collections`, `/setting
 
 ## **5\) Theming & Design System**
 
-**Source of truth:** `/docs/Theme.md`. That document owns typography, color tokens, shadows, pressed states, etc. If this PRD and Theme.md ever disagree, **Theme.md wins**.
+**Source of truth:** `/Docs/Theme.md`. That document owns typography, color tokens, shadows, pressed states, etc. If this PRD and Theme.md ever disagree, **Theme.md wins**.
 
 ### **5.1 Theme Family & Visual Language**
 
@@ -343,7 +343,7 @@ For clarity, PRDv3 previously expressed routes as `/`, `/collections`, `/setting
 
 * `feature/settings/` — Settings screen \+ theme toggle \+ ViewModel integration.
 
-* `docs/` — PRD.md (this), Theme.md, ADRs.  
+* `Docs/` — PRD.md (this), Theme.md, ADRs.  
    This separation enforces clean boundaries between UI features, shared design tokens, and persistence.
 
 ### **8.2 Initial File Map (for bootstrap / codegen seeding)**
@@ -617,12 +617,12 @@ Scripted helpers (e.g. `scripts/ai/plan.sh`, `scripts/ai/impl.sh <feature>`, `sc
 
 ## **20\) Open Questions / TBD (tracked as issues)**
 
-* Finalize exact color tokens for **Cosmic Teal** and **Red Star** in `/docs/Theme.md` (ensure WCAG AA).
+* Finalize exact color tokens for **Cosmic Teal** and **Red Star** in `/Docs/Theme.md` (ensure WCAG AA).
 
 * Decide whether v1 ships with a branded app icon and splash screen or if that’s v1.1.
 
 * Lock down control style in Settings: segmented buttons vs radio buttons vs switch for theme picker (must remain obvious, tappable at 48dp+, and screen-reader-friendly).  
 ---
 
-  **This updated PRD replaces the previous PRDv3.md as the single source of truth for Vagabond v1. All deviations must land in an ADR (`/docs/adrs/`) and link back here.**
+  **This updated PRD replaces the previous PRDv3.md as the single source of truth for Vagabond v1. All deviations must land in an ADR (`/Docs/adrs/`) and link back here.**
 

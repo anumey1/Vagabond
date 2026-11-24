@@ -5,11 +5,11 @@
 | C1 Gather facts | [x] | 2026-11-08 | Read only. Questions for the owner at the end |
 | C2 Draft | [x] | 2026-11-08 | 374 lines; owner questions became §2 O-1 to O-13. Preview check.sh: only FAIL is the missing Changelog (C4) |
 | C3 Verify | [x] | 2026-11-09 | Verify is red (tests don't compile); release and lint fail; 3 new limitations, 3 new open items |
-| C4 Changelog | [x] | 2026-11-09 | `docs/Changelog.md` created; entry lists every issue found (owner asked for a note of them) |
+| C4 Changelog | [x] | 2026-11-09 | `Docs/Changelog.md` created; entry lists every issue found (owner asked for a note of them) |
 | C5 Pointers | [x] | 2026-11-09 | `AGENTS.md` block + branch `main`; Res WorkMap §3, §5; Res stats header, O-8, §7.6; Res Changelog entry. Verify command same in all three. Res check.sh PASS |
 | C6 Checks | [x] | 2026-11-09 | check.sh PASS (5 PRD warnings); cold-start passed; F1 walked, 5 small fixes; Draft line gone; Res backup re-run |
 
-Kinds (B6): **Game whose rules come from a spec** (Hangman from `docs/Games/HangmanPRD.md`; Minesweeper spec
+Kinds (B6): **Game whose rules come from a spec** (Hangman from `Docs/Games/HangmanPRD.md`; Minesweeper spec
 written, not built). Not a published app and no store presence found in the repo (*Live* to confirm with the owner).
 
 ## Owner decisions for this job
@@ -69,7 +69,7 @@ written, not built). Not a published app and no store presence found in the repo
 ### §2 Open work (candidates; none are tracked anywhere yet)
 
 - PRD §20 open questions: final colour tokens with WCAG AA; branded icon and splash; Settings control style.
-- Minesweeper: full PRD (`docs/Games/MinesweeperPRD.md`), no module.
+- Minesweeper: full PRD (`Docs/Games/MinesweeperPRD.md`), no module.
 - Collections: 7 disabled "Title in the Works" placeholders (`CollectionsScreen.kt:48-89`).
 - Stale instrumented tests (see §9). Unused Hangman drawables (see §11). Tracked build output (Res O-6).
 - No ID scheme exists yet: new `O-`, `R-`, `L-` IDs from 1.
@@ -167,12 +167,12 @@ written, not built). Not a published app and no store presence found in the repo
 
 ### §10 Decisions
 
-- 10.1 Owner rulings: none recorded in any doc with a date. The two from this job (branch, `docs/`) may go here.
+- 10.1 Owner rulings: none recorded in any doc with a date. The two from this job (branch, `Docs/`) may go here.
 - 10.2 Deviations from the specs (PRD, HangmanPRD): Hangman exists in v1; Collections content; screens in `app`
   not feature modules; hard-coded strings; missing KDoc; `@OptIn` use; targetSdk 36 vs PRD 35; JVM 11 vs PRD's
   JDK 17 (toolchain vs target, to confirm); word list in Kotlin not `res/values/arrays.xml`, ~2,000 not ~100;
   gallows is ASCII text, not the 7 vector drawables; End "Play Again" goes to Input (matches HangmanPRD); no ADRs
-  folder although the PRD says deviations go to `/docs/adrs/`.
+  folder although the PRD says deviations go to `/Docs/adrs/`.
 - 10.3 Accepted, don't chase: none known; *ask the owner*.
 
 ### §11 Limitations, traps
@@ -190,13 +190,13 @@ written, not built). Not a published app and no store presence found in the repo
 
 | Doc | Lines (2026-11-08, `wc -l`) | State |
 |---|---|---|
-| `docs/PRD.md` | 628 | Shell spec v1; partly outdated (no games, 8 "Coming Soon" tiles, Makefile, CI, branch policy) |
-| `docs/Theme.md` | 294 | PixelBrute style guide; source for palettes |
-| `docs/Games/HangmanPRD.md` | 143 | Draft 2025-10-31; mostly built, deviations above |
-| `docs/Games/HangmanDrawing.md` | 98 | ASCII-art instructions used by `HangmanVisual` |
-| `docs/Games/MinesweeperPRD.md` | 527 | Spec for an unbuilt game |
-| `docs/Saves/savefile1.md` | 166 | Project snapshot at v4.1 (history; becomes Changelog "Older history"?) |
-| `docs/AndroidCLI.md` | 859 | Older CLI guide; `android-cli` skill is current (AGENTS.md) |
+| `Docs/PRD.md` | 628 | Shell spec v1; partly outdated (no games, 8 "Coming Soon" tiles, Makefile, CI, branch policy) |
+| `Docs/Theme.md` | 294 | PixelBrute style guide; source for palettes |
+| `Docs/Games/HangmanPRD.md` | 143 | Draft 2025-10-31; mostly built, deviations above |
+| `Docs/Games/HangmanDrawing.md` | 98 | ASCII-art instructions used by `HangmanVisual` |
+| `Docs/Games/MinesweeperPRD.md` | 527 | Spec for an unbuilt game |
+| `Docs/Saves/savefile1.md` | 166 | Project snapshot at v4.1 (history; becomes Changelog "Older history"?) |
+| `Docs/AndroidCLI.md` | 859 | Older CLI guide; `android-cli` skill is current (AGENTS.md) |
 | `GeminiPlan.md` | 127 | Earlier implementation plan (historical) |
 | `README.md` | 1 | Title only |
 | `.claude/skills/` | — | Project skills: `agp-9-upgrade`, `android-cli`, `testing-setup` |
@@ -217,7 +217,7 @@ PixelBrute (design system / `pixelBrute` modifier), Cosmic Teal / Red Star (the 
    exception (§10.3), or an open item to remove (§2)?
 5. **Stale PRD claims** (8 "Coming Soon" tiles, strings in resources, KDoc, Makefile targets, CI, ADRs): still
    wanted (open items) or dropped (deviations accepted)?
-6. **`docs/Saves/savefile1.md`:** keep as a document, or treat as history for the Changelog's "Older history"?
+6. **`Docs/Saves/savefile1.md`:** keep as a document, or treat as history for the Changelog's "Older history"?
 7. **Stray `core/common/utils/`:** known leftover? (Only recorded; no code change in this job.)
 
 ## C2 notes
@@ -227,7 +227,7 @@ PixelBrute (design system / `pixelBrute` modifier), Cosmic Teal / Red Star (the 
 - Facts still to confirm in C3: L-3 (`removeLast`), the `composeOptions` trap (§11.2), release build (L-5), local
   JDK (§8), test count.
 - check.sh preview warnings, kept on purpose: paths that are named because they are missing (`CLAUDE.md`,
-  `docs/adrs/`, `feature/hangman/src/test/`, library ProGuard files); `§15`, `§16`, `§1.5`, `§2.1`, `§2.3` are PRD
+  `Docs/adrs/`, `feature/hangman/src/test/`, library ProGuard files); `§15`, `§16`, `§1.5`, `§2.1`, `§2.3` are PRD
   section numbers, each written as "PRD §N".
 
 ## C3 record (2026-11-09)

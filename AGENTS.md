@@ -5,18 +5,18 @@ Antigravity read it too).
 
 A lightweight offline "traveling games" container app for 1–2 players, built CLI-only. Package
 `com.dicereligion.vagabond`. Kotlin 2.0 + Jetpack Compose, Hilt (kapt), DataStore, AGP 8.13. minSdk 30,
-targetSdk/compileSdk 36. Work happens on `main` (owner ruling, `docs/stats.md` §10 R-1).
+targetSdk/compileSdk 36. Work happens on `main` (owner ruling, `Docs/stats.md` §10 R-1).
 
 ## Status doc
-- `docs/stats.md` is the status doc. Load it with `/stats` (header + section index), then read only the
+- `Docs/stats.md` is the status doc. Load it with `/stats` (header + section index), then read only the
   sections the task needs. Read `stats.md §1 Rules and hazards` before changing anything.
 - Every change updates the sections it touched and the *Updated* row, and adds an entry at the top of
-  `docs/Changelog.md`, in the same change.
+  `Docs/Changelog.md`, in the same change.
 
 ## Where things are
-- `docs/PRD.md` — product + technical spec (read by section): §5 theming, §6 functional requirements, §8
-  architecture, §9 CLI workflow, §10 acceptance criteria, §11 testing. `docs/Theme.md` — design system.
-  `docs/Games/` — per-game PRDs (Hangman, Minesweeper). `docs/AndroidCLI.md` is an older hand-written CLI guide;
+- `Docs/PRD.md` — product + technical spec (read by section): §5 theming, §6 functional requirements, §8
+  architecture, §9 CLI workflow, §10 acceptance criteria, §11 testing. `Docs/Theme.md` — design system.
+  `Docs/Games/` — per-game PRDs (Hangman, Minesweeper). `Docs/AndroidCLI.md` is an older hand-written CLI guide;
   the `android-cli` skill is the current reference. `GeminiPlan.md` — an earlier implementation plan.
 - Modules: `app` (shell, landing/collections/settings screens, DI), `core:designsystem` (PixelBrute style),
   `core:utils`, `feature:hangman`.

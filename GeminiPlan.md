@@ -120,7 +120,7 @@ This is a critical first step as it defines the visual identity of the app.
 
 ## 9. Open Questions / TBD (from PRD.md)
 
-*   Finalize exact color tokens for Cosmic Teal and Red Star in `/docs/Theme.md` (ensure WCAG AA). (This will be handled during implementation based on the provided hex codes).
+*   Finalize exact color tokens for Cosmic Teal and Red Star in `/Docs/Theme.md` (ensure WCAG AA). (This will be handled during implementation based on the provided hex codes).
 *   Decide whether v1 ships with a branded app icon and splash screen or if that’s v1.1. (Will assume default for v1 unless specified).
 *   Lock down control style in Settings: segmented buttons vs radio buttons vs switch for theme picker. (Will use a segmented control as it's a common and clear pattern for two distinct choices).
 

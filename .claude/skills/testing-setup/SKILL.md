@@ -202,8 +202,8 @@ Install JaCoCo for local testing code coverage.
   - If there is an AGENTS.md file present in the project, update it with any
     changes you've made to the testing strategy.
 
-  - If there is no AGENTS.md file, create a new file (docs/testing.md) with
+  - If there is no AGENTS.md file, create a new file (Docs/testing.md) with
     a description of the testing strategy, including the commands needed to
     run every type of test and where the screenshot reference files live.
     Also create a new AGENTS.md file in the root and create a link to
-    docs/testing.md.
+    Docs/testing.md.
